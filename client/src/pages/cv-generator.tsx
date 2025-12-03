@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import { Download, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
 import { CVProvider, useCV } from '@/context/CVContext';
 import Header from '@/components/Header';
@@ -25,7 +24,7 @@ function CVGeneratorContent() {
   const { activeSections } = useCV();
   const { toast } = useToast();
   const [isExporting, setIsExporting] = useState(false);
-  const [showPreview, setShowPreview] = useState(true);
+  const [showPreview, setShowPreview] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
 
   const handleExportPDF = async () => {
@@ -78,31 +77,27 @@ function CVGeneratorContent() {
           <TemplateGallery />
         </div>
 
-        <div className="flex gap-6">
-          <div className={`flex-1 space-y-6 ${showPreview ? 'lg:w-[45%]' : 'w-full'}`}>
-            <ScrollArea className="h-[calc(100vh-240px)] pr-4">
-              <div className="space-y-6 pb-20">
-                <PersonalDetails />
-                <SummarySection />
-                <ExperienceSection />
-                <EducationSection />
-                <SkillsSection />
+        <div className="flex flex-col lg:flex-row gap-6">
+          <div className="w-full lg:w-[45%] space-y-6 pb-24">
+            <PersonalDetails />
+            <SummarySection />
+            <ExperienceSection />
+            <EducationSection />
+            <SkillsSection />
 
-                {activeSections.includes('certifications') && <CertificationsSection />}
-                {activeSections.includes('achievements') && <AchievementsSection />}
-                {activeSections.includes('projects') && <ProjectsSection />}
-                {activeSections.includes('languages') && <LanguagesSection />}
-                {activeSections.includes('interests') && <InterestsSection />}
-                {activeSections.includes('additionalInfo') && <AdditionalInfoSection />}
-              </div>
-            </ScrollArea>
+            {activeSections.includes('certifications') && <CertificationsSection />}
+            {activeSections.includes('achievements') && <AchievementsSection />}
+            {activeSections.includes('projects') && <ProjectsSection />}
+            {activeSections.includes('languages') && <LanguagesSection />}
+            {activeSections.includes('interests') && <InterestsSection />}
+            {activeSections.includes('additionalInfo') && <AdditionalInfoSection />}
           </div>
 
-          {showPreview && (
-            <div className="hidden lg:block lg:w-[55%]" ref={previewRef}>
-              <CVPreview className="sticky top-24" />
+          <div className="hidden lg:block lg:w-[55%]" ref={previewRef}>
+            <div className="sticky top-20">
+              <CVPreview />
             </div>
-          )}
+          </div>
         </div>
       </div>
 
@@ -110,7 +105,7 @@ function CVGeneratorContent() {
         <Button
           variant="outline"
           size="lg"
-          className="lg:hidden shadow-lg"
+          className="lg:hidden shadow-lg bg-background"
           onClick={() => setShowPreview(!showPreview)}
           data-testid="button-toggle-preview"
         >
@@ -148,9 +143,21 @@ function CVGeneratorContent() {
         </Button>
       </div>
 
-      {!showPreview && (
-        <div className="fixed inset-x-0 bottom-0 lg:hidden bg-background/95 backdrop-blur border-t p-4 z-40">
-          <CVPreview className="h-[300px]" />
+      {showPreview && (
+        <div className="fixed inset-0 z-40 lg:hidden bg-background/95 backdrop-blur overflow-auto">
+          <div className="sticky top-0 z-10 flex items-center justify-between p-4 border-b bg-background">
+            <h2 className="font-semibold">CV Preview</h2>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowPreview(false)}
+            >
+              Close
+            </Button>
+          </div>
+          <div className="p-4">
+            <CVPreview />
+          </div>
         </div>
       )}
     </div>
