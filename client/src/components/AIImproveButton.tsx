@@ -8,7 +8,10 @@ import {
 } from '@/components/ui/popover';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import type { ToneType } from '@/context/CVContext';
+import { useToast } from '@/hooks/use-toast';
+import { apiRequest } from '@/lib/queryClient';
+
+export type ToneType = 'professional' | 'ats-friendly' | 'concise' | 'expanded' | 'creative';
 
 const tones: { value: ToneType; label: string; description: string }[] = [
   { value: 'professional', label: 'Professional', description: 'Formal business tone' },
@@ -28,26 +31,42 @@ export default function AIImproveButton({ text, onImprove, fieldName }: AIImprov
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTone, setSelectedTone] = useState<ToneType>('professional');
   const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   const handleImprove = async () => {
     if (!text.trim()) return;
     
     setIsLoading(true);
     
-    // todo: remove mock functionality - connect to real AI API
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    const improvements: Record<ToneType, string> = {
-      'professional': `${text} - Enhanced with professional terminology and structured format for maximum impact.`,
-      'ats-friendly': `${text} - Optimized with industry keywords and clear formatting for ATS compatibility.`,
-      'concise': text.split(' ').slice(0, Math.ceil(text.split(' ').length * 0.7)).join(' ') + '.',
-      'expanded': `${text} Additionally, this demonstrates strong capabilities in the relevant area, with proven track record of success and continuous improvement.`,
-      'creative': `${text} - Bringing innovative perspectives and unique value to every endeavor.`,
-    };
-    
-    onImprove(improvements[selectedTone]);
-    setIsLoading(false);
-    setIsOpen(false);
+    try {
+      const response = await apiRequest('POST', '/api/improve-text', {
+        text,
+        tone: selectedTone,
+        fieldType: fieldName,
+      });
+      
+      const data = await response.json();
+      
+      if (data.improvedText) {
+        onImprove(data.improvedText);
+        toast({
+          title: 'Text Improved',
+          description: 'Your text has been enhanced with AI.',
+        });
+      } else {
+        throw new Error(data.error || 'Failed to improve text');
+      }
+    } catch (error) {
+      console.error('Error improving text:', error);
+      toast({
+        title: 'Improvement Failed',
+        description: error instanceof Error ? error.message : 'Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+      setIsOpen(false);
+    }
   };
 
   return (
