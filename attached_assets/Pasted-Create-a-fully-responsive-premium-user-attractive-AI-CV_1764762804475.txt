@@ -1,0 +1,105 @@
+Create a fully responsive, premium, user-attractive AI CV/Resume Generator webpage using HTML, CSS, and JavaScript (front-end only). The page should be visually appealing with modern UI design, smooth animations, soft shadows, rounded containers, elegant spacing, and use Google Fonts like Poppins or Inter. The webpage must include all of the following features:
+
+1. HEADER
+- Title: "AI CV Generator"
+- Subtitle: "Build a professional resume instantly"
+- Top-right “More” menu for additional sections:
+    • Certifications
+    • Achievements
+    • Projects
+    • Languages
+    • Interests
+    • Additional Information
+
+2. TEMPLATE SELECTION
+- Include 100+ legal open-source resume templates (MIT, Apache, GPL).
+- Examples: JSON Resume templates, OpenResume templates, Awesome-CV inspired HTML.
+- Display templates in a grid or horizontal scroll gallery.
+- Selecting a template instantly updates the CV preview.
+- Templates must support all dynamic user content (photo, experience, education, skills, additional sections).
+- Include different professional styles: minimal, corporate, modern sidebar, colored header, elegant serif, creative-professional, ATS-friendly.
+
+3. PROFILE PHOTO
+- Allow user to upload a profile picture.
+- Crop to circle or square depending on template.
+- Display image in CV preview instantly.
+
+4. PERSONAL DETAILS
+- Fields: Full Name, Job Title, Email, Phone, Location, Website/LinkedIn/Portfolio.
+- Include AI-powered “Improve / Rewrite” button for each field with tone options: Professional, ATS-Friendly, Concise, Expanded, Creative.
+
+5. SUMMARY / PROFESSIONAL PROFILE
+- Multi-line text input.
+- “Improve / Rewrite with AI” button to enhance summary based on selected tone.
+- Auto-update CV preview on improvement.
+
+6. EXPERIENCE (Dynamic)
+- Add/remove experience blocks.
+- Fields per block: Job Title, Company, Start Month/Year, End Month/Year, Description.
+- Checkbox: “Currently Working Here” → end date becomes “Present”.
+- “+ Add More Experience” button.
+- AI-powered rewrite for job descriptions.
+
+7. EDUCATION (Dynamic)
+- Add/remove education blocks.
+- Fields: Degree, Institution, Start Month/Year, End Month/Year or “Studying Currently”, Description (optional).
+- AI-powered rewrite for education descriptions.
+- “+ Add More Education” button.
+
+8. ADDITIONAL SECTIONS
+- Under “More” menu, dynamic add/remove for:
+    • Certifications
+    • Achievements
+    • Projects
+    • Languages (with proficiency)
+    • Interests
+    • Additional Information
+- AI-powered rewrite available where relevant.
+
+9. SKILLS
+- Comma-separated input converted to skill badges.
+- User can add/remove skills dynamically.
+
+10. AI IMPROVEMENT / REWRITE FEATURE
+- Add “Improve / Rewrite with AI” buttons beside each editable field.
+- Include tone selector dropdown/modal: Professional, ATS-Friendly, Concise, Expanded, Creative.
+- When clicked, send current text to placeholder AI API via JS.
+- Show loading animation while waiting.
+- Replace original text with improved version and update CV preview instantly.
+
+11. CV PREVIEW
+- Clean, structured preview panel.
+- Reflects selected template and all dynamic input fields.
+- Fully responsive (desktop & mobile).
+- Supports real-time updates for all sections.
+
+12. PDF EXPORT
+- Button: “Download PDF”
+- Use html2pdf.js or similar library.
+- Ensure exported PDF preserves template layout, colors, fonts, and uploaded photo.
+
+13. UI DESIGN & ANIMATIONS
+- Modern, soft color palette (pastel, neutral, or corporate tones).
+- Smooth hover effects on buttons, cards, and template thumbnails.
+- Rounded cards (border-radius: 16px+).
+- Consistent spacing (20–40px padding/margins).
+- Elegant typography using Google Fonts (Poppins or Inter).
+- Responsive layout for desktop, tablet, and mobile.
+- Professional, attractive, visually appealing overall design.
+
+14. CODE STRUCTURE
+- Single HTML file with internal CSS and JS.
+- Fully functional front-end, no backend required.
+- Well-commented, easy to edit.
+- All dynamic features integrated seamlessly.
+
+FINAL REQUIREMENT:
+- Provide a **fully working, user-attractive AI CV Generator webpage** with:
+    • 100+ templates  
+    • Dynamic add/remove sections  
+    • Profile photo upload  
+    • Skills badges  
+    • AI-powered text improvement  
+    • Real-time CV preview  
+    • PDF export  
+    • Responsive, premium, visually appealing design
