@@ -103,8 +103,8 @@ const sampleCVData: CVData = {
   email: 'alex.chen@example.com',
   phone: '+1 (555) 987-6543',
   location: 'San Francisco, CA',
-  website: 'linkedin.com/in/alexandrachen',
-  summary: 'Creative and strategic product designer with 7+ years of experience crafting intuitive digital experiences for SaaS and consumer products. Proven track record of leading design systems, conducting user research, and collaborating cross-functionally to ship products loved by millions of users.',
+  website: 'alexandrachen.design',
+  summary: 'Creative and strategic product designer with 7+ years of experience crafting intuitive digital experiences for leading SaaS and consumer products. Proven track record of leading design systems, conducting user research, and collaborating cross-functionally to deliver products loved by millions of users. Passionate about accessible design and data-driven decision making.',
   experiences: [
     {
       id: '1',
@@ -113,7 +113,7 @@ const sampleCVData: CVData = {
       startDate: '2021-06',
       endDate: '',
       currentlyWorking: true,
-      description: 'Led end-to-end design for 3 major product launches, increasing user engagement by 40%. Established and maintained a company-wide design system used by 50+ engineers. Conducted 200+ user interviews to inform product strategy and roadmap decisions.',
+      description: 'Led end-to-end design for 3 major product launches, increasing user engagement by 40%. Established and maintained a company-wide design system adopted by 50+ engineers. Conducted 200+ user interviews to inform product strategy. Mentored 3 junior designers and championed accessibility standards across all product surfaces.',
     },
     {
       id: '2',
@@ -122,7 +122,16 @@ const sampleCVData: CVData = {
       startDate: '2018-03',
       endDate: '2021-05',
       currentlyWorking: false,
-      description: 'Redesigned the host onboarding flow, reducing drop-off by 35% and increasing host sign-ups by 22%. Collaborated with the data team to establish design metrics and success criteria for new features.',
+      description: 'Redesigned the host onboarding flow, reducing drop-off by 35% and increasing host sign-ups by 22%. Collaborated with the data science team to establish design metrics and KPIs. Shipped 12 A/B tests resulting in a combined revenue uplift of $4.2M annually.',
+    },
+    {
+      id: '3',
+      jobTitle: 'UX Designer',
+      company: 'IDEO',
+      startDate: '2016-07',
+      endDate: '2018-02',
+      currentlyWorking: false,
+      description: 'Worked on design sprints for Fortune 500 clients including healthcare, fintech, and retail. Delivered human-centered design solutions under tight deadlines. Facilitated 40+ co-creation workshops with end users and stakeholders.',
     },
   ],
   education: [
@@ -130,18 +139,35 @@ const sampleCVData: CVData = {
       id: '1',
       degree: 'B.F.A. in Interaction Design',
       institution: 'California College of the Arts',
-      startDate: '2014-09',
-      endDate: '2018-05',
+      startDate: '2012-09',
+      endDate: '2016-05',
       currentlyStudying: false,
-      description: 'Graduated with Honors. Senior thesis on accessible design patterns.',
+      description: 'Graduated with Honors. Senior thesis on accessible design patterns for visually impaired users.',
     },
   ],
-  skills: ['Figma', 'Prototyping', 'User Research', 'Design Systems', 'Sketch', 'Adobe XD', 'HTML/CSS', 'Usability Testing'],
-  certifications: [],
-  achievements: [],
-  projects: [],
-  languages: [],
-  interests: [],
+  skills: ['Figma', 'Prototyping', 'User Research', 'Design Systems', 'Adobe XD', 'Usability Testing', 'HTML/CSS', 'Data Analysis', 'Agile', 'Wireframing'],
+  certifications: [
+    { id: '1', name: 'Google UX Design Certificate', issuer: 'Google', date: '2022-03' },
+    { id: '2', name: 'Certified Usability Analyst (CUA)', issuer: 'Human Factors International', date: '2020-09' },
+  ],
+  achievements: [
+    'Speaker at Config 2023 — "Building Inclusive Design Systems at Scale"',
+    'Winner, Fast Company Innovation by Design Award 2022',
+  ],
+  projects: [
+    {
+      id: '1',
+      name: 'Open Source Design System',
+      description: 'Built and maintain an open-source React component library with 1,200+ GitHub stars. Used by 80+ startups globally.',
+      link: 'github.com/alexandrachen/ds-kit',
+    },
+  ],
+  languages: [
+    { id: '1', name: 'English', proficiency: 'native' },
+    { id: '2', name: 'Mandarin', proficiency: 'fluent' },
+    { id: '3', name: 'Spanish', proficiency: 'intermediate' },
+  ],
+  interests: ['Design Research', 'Typography', 'Hiking', 'Photography'],
   additionalInfo: '',
 };
 
@@ -212,6 +238,10 @@ export function CVProvider({ children }: { children: ReactNode }) {
 
   const loadSampleData = () => {
     setCVData(sampleCVData);
+    setActiveSections([
+      'personal', 'summary', 'experience', 'education', 'skills',
+      'certifications', 'achievements', 'projects', 'languages', 'interests',
+    ]);
   };
 
   return (
