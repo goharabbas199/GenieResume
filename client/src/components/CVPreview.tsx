@@ -11,6 +11,7 @@ const formatDate = (dateStr: string) => {
 
 interface CVPreviewProps {
   className?: string;
+  zoom?: number;
 }
 
 type TemplateConfig = {
@@ -43,7 +44,7 @@ const templateConfigs: Record<string, TemplateConfig> = {
   'simple': { primary: '#78716C', accent: '#FAFAF9', bg: '#FFFFFF', layout: 'compact' },
 };
 
-export default function CVPreview({ className }: CVPreviewProps) {
+export default function CVPreview({ className, zoom = 0.85 }: CVPreviewProps) {
   const { cvData, selectedTemplate, activeSections } = useCV();
   const config = templateConfigs[selectedTemplate] || templateConfigs['modern'];
   const { primary, accent, layout } = config;
@@ -701,12 +702,20 @@ export default function CVPreview({ className }: CVPreviewProps) {
 
   return (
     <div className={cn("bg-card rounded-2xl shadow-lg overflow-hidden border", className)} data-testid="cv-preview">
-      <div className="bg-muted/50 px-4 py-2 border-b">
-        <p className="text-xs font-medium text-muted-foreground">Live Preview</p>
-      </div>
-      <ScrollArea className="h-[calc(100vh-180px)]">
-        <div id="cv-preview-content" className="p-6" style={{ backgroundColor: config.bg }}>
-          <div className="mx-auto bg-white shadow-sm border max-w-[750px]" style={{ minHeight: '900px', fontFamily: 'Inter, sans-serif' }}>
+      <ScrollArea className="h-[calc(100vh-200px)]">
+        <div className="p-4 flex justify-center" style={{ backgroundColor: '#e5e7eb' }}>
+          <div
+            id="cv-preview-content"
+            className="bg-white shadow-xl origin-top"
+            style={{
+              width: '794px',
+              minHeight: '1122px',
+              fontFamily: 'Inter, sans-serif',
+              transform: `scale(${zoom})`,
+              transformOrigin: 'top center',
+              marginBottom: `${(zoom - 1) * 1122}px`,
+            }}
+          >
             {renderLayout()}
           </div>
         </div>

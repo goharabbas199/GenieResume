@@ -1,14 +1,23 @@
 import { useState } from 'react';
-import { Wrench, X, Plus } from 'lucide-react';
+import { Wrench, X, Plus, Lightbulb } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useCV } from '@/context/CVContext';
+import { cn } from '@/lib/utils';
+
+const suggestedSkills = [
+  'Microsoft Office', 'Project Management', 'Leadership', 'Communication', 'Problem Solving',
+  'JavaScript', 'Python', 'React', 'Node.js', 'SQL', 'Data Analysis', 'Excel',
+  'Customer Service', 'Sales', 'Marketing', 'SEO', 'Social Media', 'Photoshop',
+  'Agile', 'Scrum', 'Team Collaboration', 'Critical Thinking', 'Time Management',
+];
 
 export default function SkillsSection() {
   const { cvData, updateCVData } = useCV();
   const [inputValue, setInputValue] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const addSkill = (skill: string) => {
     const trimmed = skill.trim();
@@ -36,18 +45,32 @@ export default function SkillsSection() {
     setInputValue('');
   };
 
+  const availableSuggestions = suggestedSkills.filter(s => !cvData.skills.includes(s));
+
   return (
     <Card data-testid="section-skills">
       <CardHeader className="pb-4">
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <Wrench className="h-5 w-5 text-primary" />
-          Skills
-        </CardTitle>
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Wrench className="h-5 w-5 text-primary" />
+            Skills
+          </CardTitle>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="gap-1.5 text-xs h-7"
+            onClick={() => setShowSuggestions(!showSuggestions)}
+            data-testid="button-toggle-suggestions"
+          >
+            <Lightbulb className="h-3.5 w-3.5" />
+            {showSuggestions ? 'Hide' : 'Suggestions'}
+          </Button>
+        </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex gap-2">
           <Input
-            placeholder="Add skills (comma-separated)"
+            placeholder="Type a skill, press Enter or comma to add"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -65,9 +88,23 @@ export default function SkillsSection() {
           </Button>
         </div>
 
-        <p className="text-xs text-muted-foreground">
-          Press Enter or use commas to add multiple skills at once
-        </p>
+        {showSuggestions && availableSuggestions.length > 0 && (
+          <div className="rounded-lg border bg-muted/30 p-3 space-y-2">
+            <p className="text-xs font-medium text-muted-foreground">Click to add:</p>
+            <div className="flex flex-wrap gap-1.5">
+              {availableSuggestions.slice(0, 15).map((skill) => (
+                <button
+                  key={skill}
+                  onClick={() => addSkill(skill)}
+                  className="px-2 py-0.5 rounded-full text-xs border border-dashed border-muted-foreground/40 text-muted-foreground hover:border-primary hover:text-primary hover:bg-primary/5 transition-colors"
+                  data-testid={`suggestion-${skill}`}
+                >
+                  + {skill}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {cvData.skills.length > 0 ? (
           <div className="flex flex-wrap gap-2">
@@ -93,6 +130,7 @@ export default function SkillsSection() {
           <div className="rounded-lg border-2 border-dashed p-6 text-center">
             <Wrench className="mx-auto h-8 w-8 text-muted-foreground/50" />
             <p className="mt-2 text-sm text-muted-foreground">No skills added yet</p>
+            <p className="text-xs text-muted-foreground mt-1">Type above or use suggestions</p>
           </div>
         )}
       </CardContent>

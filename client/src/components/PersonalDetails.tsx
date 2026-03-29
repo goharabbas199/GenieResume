@@ -1,4 +1,4 @@
-import { User, Mail, Phone, MapPin, Globe } from 'lucide-react';
+import { User, Mail, Phone, MapPin, Globe, Linkedin } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,58 +10,61 @@ export default function PersonalDetails() {
 
   return (
     <Card data-testid="section-personal-details">
-      <CardHeader className="pb-4">
+      <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-lg">
           <User className="h-5 w-5 text-primary" />
           Personal Details
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="flex justify-center">
+      <CardContent className="space-y-5">
+        <div className="flex flex-col items-center gap-3">
           <PhotoUpload />
+          <p className="text-xs text-muted-foreground text-center">
+            Click to upload or drag &amp; drop. JPG, PNG or WebP.
+          </p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-2">
-            <Label htmlFor="fullName">Full Name</Label>
+          <div className="space-y-1.5">
+            <Label htmlFor="fullName">Full Name *</Label>
             <Input
               id="fullName"
-              placeholder="John Doe"
+              placeholder="e.g. Jane Smith"
               value={cvData.fullName}
               onChange={(e) => updateCVData('fullName', e.target.value)}
               data-testid="input-fullname"
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="jobTitle">Job Title</Label>
+          <div className="space-y-1.5">
+            <Label htmlFor="jobTitle">Job Title *</Label>
             <Input
               id="jobTitle"
-              placeholder="Senior Software Engineer"
+              placeholder="e.g. Senior Software Engineer"
               value={cvData.jobTitle}
               onChange={(e) => updateCVData('jobTitle', e.target.value)}
               data-testid="input-jobtitle"
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <Label htmlFor="email" className="flex items-center gap-1.5">
-              <Mail className="h-3.5 w-3.5" />
-              Email
+              <Mail className="h-3.5 w-3.5 text-muted-foreground" />
+              Email *
             </Label>
             <Input
               id="email"
               type="email"
-              placeholder="john@example.com"
+              placeholder="jane@example.com"
               value={cvData.email}
               onChange={(e) => updateCVData('email', e.target.value)}
               data-testid="input-email"
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <Label htmlFor="phone" className="flex items-center gap-1.5">
-              <Phone className="h-3.5 w-3.5" />
+              <Phone className="h-3.5 w-3.5 text-muted-foreground" />
               Phone
             </Label>
             <Input
@@ -74,28 +77,28 @@ export default function PersonalDetails() {
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <Label htmlFor="location" className="flex items-center gap-1.5">
-              <MapPin className="h-3.5 w-3.5" />
+              <MapPin className="h-3.5 w-3.5 text-muted-foreground" />
               Location
             </Label>
             <Input
               id="location"
-              placeholder="San Francisco, CA"
+              placeholder="City, Country"
               value={cvData.location}
               onChange={(e) => updateCVData('location', e.target.value)}
               data-testid="input-location"
             />
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <Label htmlFor="website" className="flex items-center gap-1.5">
-              <Globe className="h-3.5 w-3.5" />
-              Website / LinkedIn
+              <Globe className="h-3.5 w-3.5 text-muted-foreground" />
+              Website / Portfolio
             </Label>
             <Input
               id="website"
-              placeholder="linkedin.com/in/johndoe"
+              placeholder="yourportfolio.com"
               value={cvData.website}
               onChange={(e) => updateCVData('website', e.target.value)}
               data-testid="input-website"
