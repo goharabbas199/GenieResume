@@ -775,6 +775,521 @@ function TemplateTech({ d, active, primary, accent }: any) {
   );
 }
 
+function TemplateTimeline({ d, active, primary, accent }: any) {
+  const tiny: React.CSSProperties = { fontSize: 10, color: '#555', fontFamily: FONT };
+  const secTitle: React.CSSProperties = { fontSize: 10, fontWeight: 700, letterSpacing: 1.8, textTransform: 'uppercase', color: primary, marginBottom: 14 };
+  const pill: React.CSSProperties = { display: 'inline-block', background: accent, color: primary, fontSize: 9.5, padding: '2px 8px', borderRadius: 12, marginRight: 4, marginBottom: 4 };
+
+  return (
+    <div style={{ fontFamily: FONT, backgroundColor: '#fff', minHeight: 1054, color: '#1a1a1a' }}>
+      <div style={{ backgroundColor: primary, padding: '36px 48px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+          {d.photo && (
+            <img src={d.photo} alt="" style={{ width: 84, height: 84, borderRadius: '50%', objectFit: 'cover', border: '3px solid rgba(255,255,255,0.4)', flexShrink: 0 }} />
+          )}
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 28, fontWeight: 900, color: '#fff', lineHeight: 1.1 }}>{d.fullName || 'Your Name'}</div>
+            {d.jobTitle && <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.8)', marginTop: 5, fontWeight: 400, letterSpacing: 1 }}>{d.jobTitle}</div>}
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4, alignItems: 'flex-end', fontSize: 9.5, color: 'rgba(255,255,255,0.8)' }}>
+            {d.email && <span>✉ {d.email}</span>}
+            {d.phone && <span>✆ {d.phone}</span>}
+            {d.location && <span>⊙ {d.location}</span>}
+            {d.website && <span>⊕ {d.website}</span>}
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', gap: 0 }}>
+        <div style={{ flex: 1, padding: '32px 40px', display: 'flex', flexDirection: 'column', gap: 24 }}>
+          {d.summary && (
+            <div>
+              <div style={secTitle}>Profile</div>
+              <div style={{ fontSize: 10.5, color: '#333', lineHeight: 1.7 }}>{d.summary}</div>
+            </div>
+          )}
+
+          {d.experiences.length > 0 && (
+            <div>
+              <div style={secTitle}>Experience</div>
+              <div style={{ position: 'relative', paddingLeft: 20, borderLeft: `2px solid ${accent}` }}>
+                {d.experiences.map((e: any, i: number) => (
+                  <div key={i} style={{ marginBottom: 18, position: 'relative' }}>
+                    <div style={{ position: 'absolute', left: -26, top: 3, width: 10, height: 10, borderRadius: '50%', backgroundColor: primary, border: '2px solid #fff', boxShadow: `0 0 0 2px ${primary}` }} />
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                      <div>
+                        <div style={{ fontSize: 11.5, fontWeight: 700, color: '#111' }}>{e.jobTitle}</div>
+                        <div style={{ fontSize: 10.5, color: primary, fontWeight: 600 }}>{e.company}</div>
+                      </div>
+                      <div style={{ ...tiny, whiteSpace: 'nowrap', flexShrink: 0, paddingLeft: 8, backgroundColor: accent, borderRadius: 4, padding: '2px 7px', fontSize: 9.5 }}>{fmt(e.startDate)} – {e.currentlyWorking ? 'Present' : fmt(e.endDate)}</div>
+                    </div>
+                    {e.description && <div style={{ ...tiny, marginTop: 5, lineHeight: 1.6 }}>{e.description}</div>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {d.education.length > 0 && (
+            <div>
+              <div style={secTitle}>Education</div>
+              <div style={{ position: 'relative', paddingLeft: 20, borderLeft: `2px solid ${accent}` }}>
+                {d.education.map((e: any, i: number) => (
+                  <div key={i} style={{ marginBottom: 14, position: 'relative' }}>
+                    <div style={{ position: 'absolute', left: -26, top: 3, width: 10, height: 10, borderRadius: '50%', backgroundColor: primary, border: '2px solid #fff', boxShadow: `0 0 0 2px ${primary}` }} />
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                      <div>
+                        <div style={{ fontSize: 11.5, fontWeight: 700, color: '#111' }}>{e.degree}</div>
+                        <div style={{ fontSize: 10.5, color: primary, fontWeight: 600 }}>{e.institution}</div>
+                      </div>
+                      <div style={{ ...tiny, whiteSpace: 'nowrap', flexShrink: 0, backgroundColor: accent, borderRadius: 4, padding: '2px 7px', fontSize: 9.5 }}>{fmt(e.startDate)} – {e.currentlyStudying ? 'Present' : fmt(e.endDate)}</div>
+                    </div>
+                    {e.description && <div style={{ ...tiny, marginTop: 4 }}>{e.description}</div>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div style={{ width: 200, flexShrink: 0, backgroundColor: accent, padding: '32px 20px', display: 'flex', flexDirection: 'column', gap: 20 }}>
+          {d.skills.length > 0 && (
+            <div>
+              <div style={{ ...secTitle, fontSize: 9, letterSpacing: 1.5 }}>Skills</div>
+              <div>{d.skills.map((s: string, i: number) => <span key={i} style={pill}>{s}</span>)}</div>
+            </div>
+          )}
+          {active.includes('certifications') && d.certifications.length > 0 && (
+            <div>
+              <div style={{ ...secTitle, fontSize: 9, letterSpacing: 1.5 }}>Certifications</div>
+              {d.certifications.map((c: any, i: number) => (
+                <div key={i} style={{ fontSize: 9.5, color: '#333', marginBottom: 8 }}>
+                  <div style={{ fontWeight: 700 }}>{c.name}</div>
+                  <div style={{ color: '#666' }}>{c.issuer}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          {active.includes('languages') && d.languages.length > 0 && (
+            <div>
+              <div style={{ ...secTitle, fontSize: 9, letterSpacing: 1.5 }}>Languages</div>
+              {d.languages.map((l: any, i: number) => (
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: '#333', marginBottom: 5 }}>
+                  <span style={{ fontWeight: 600 }}>{l.name}</span>
+                  <span style={{ textTransform: 'capitalize', color: '#666' }}>{l.proficiency}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          {active.includes('interests') && d.interests.length > 0 && (
+            <div>
+              <div style={{ ...secTitle, fontSize: 9, letterSpacing: 1.5 }}>Interests</div>
+              <div style={{ fontSize: 9.5, color: '#555', lineHeight: 1.9 }}>{d.interests.join(' · ')}</div>
+            </div>
+          )}
+          {active.includes('projects') && d.projects.length > 0 && (
+            <div>
+              <div style={{ ...secTitle, fontSize: 9, letterSpacing: 1.5 }}>Projects</div>
+              {d.projects.map((p: any, i: number) => (
+                <div key={i} style={{ marginBottom: 8 }}>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: '#111' }}>{p.name}</div>
+                  {p.link && <div style={{ fontSize: 9, color: primary }}>{p.link}</div>}
+                  {p.description && <div style={{ fontSize: 9.5, color: '#555', marginTop: 2, lineHeight: 1.5 }}>{p.description}</div>}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TemplateInfographic({ d, active, primary, accent }: any) {
+  const tiny: React.CSSProperties = { fontSize: 10, color: '#555', fontFamily: FONT };
+  const secTitle: React.CSSProperties = { fontSize: 10, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: '#fff', marginBottom: 10 };
+  const secTitleMain: React.CSSProperties = { fontSize: 10.5, fontWeight: 700, letterSpacing: 1.3, textTransform: 'uppercase', color: primary, borderBottom: `2px solid ${accent}`, paddingBottom: 4, marginBottom: 12 };
+
+  const SkillBar = ({ name, pct }: { name: string; pct: number }) => (
+    <div style={{ marginBottom: 8 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9.5, color: 'rgba(255,255,255,0.9)', marginBottom: 3 }}>
+        <span>{name}</span>
+      </div>
+      <div style={{ height: 4, backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: 2 }}>
+        <div style={{ height: '100%', width: `${pct}%`, backgroundColor: 'rgba(255,255,255,0.85)', borderRadius: 2 }} />
+      </div>
+    </div>
+  );
+
+  const skillPcts = [90, 82, 75, 68, 85, 72, 78, 65, 88, 70];
+
+  return (
+    <div style={{ fontFamily: FONT, backgroundColor: '#fff', minHeight: 1054, color: '#1a1a1a', display: 'flex' }}>
+      <div style={{ width: '35%', flexShrink: 0, backgroundColor: primary, padding: '40px 22px', display: 'flex', flexDirection: 'column', gap: 22 }}>
+        {d.photo && (
+          <div style={{ textAlign: 'center' }}>
+            <img src={d.photo} alt="" style={{ width: 90, height: 90, borderRadius: '50%', objectFit: 'cover', border: '3px solid rgba(255,255,255,0.35)' }} />
+          </div>
+        )}
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: 18, fontWeight: 900, color: '#fff', lineHeight: 1.2 }}>{d.fullName || 'Your Name'}</div>
+          {d.jobTitle && <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.7)', marginTop: 5, fontWeight: 400 }}>{d.jobTitle}</div>}
+        </div>
+        <div>
+          <div style={secTitle}>Contact</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+            {d.email && <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.85)', wordBreak: 'break-all' }}>✉ {d.email}</div>}
+            {d.phone && <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.85)' }}>✆ {d.phone}</div>}
+            {d.location && <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.85)' }}>⊙ {d.location}</div>}
+            {d.website && <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.85)', wordBreak: 'break-all' }}>⊕ {d.website}</div>}
+          </div>
+        </div>
+        {d.skills.length > 0 && (
+          <div>
+            <div style={secTitle}>Skills</div>
+            {d.skills.slice(0, 10).map((s: string, i: number) => (
+              <SkillBar key={i} name={s} pct={skillPcts[i % skillPcts.length]} />
+            ))}
+          </div>
+        )}
+        {active.includes('languages') && d.languages.length > 0 && (
+          <div>
+            <div style={secTitle}>Languages</div>
+            {d.languages.map((l: any, i: number) => (
+              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9.5, color: 'rgba(255,255,255,0.85)', marginBottom: 5 }}>
+                <span style={{ fontWeight: 600 }}>{l.name}</span>
+                <span style={{ textTransform: 'capitalize', opacity: 0.75 }}>{l.proficiency}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        {active.includes('interests') && d.interests.length > 0 && (
+          <div>
+            <div style={secTitle}>Interests</div>
+            <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.8)', lineHeight: 1.8 }}>{d.interests.join(' · ')}</div>
+          </div>
+        )}
+      </div>
+
+      <div style={{ flex: 1, padding: '40px 36px', display: 'flex', flexDirection: 'column', gap: 22 }}>
+        {d.summary && (
+          <div>
+            <div style={secTitleMain}>Profile</div>
+            <div style={{ fontSize: 10.5, color: '#333', lineHeight: 1.7 }}>{d.summary}</div>
+          </div>
+        )}
+        {d.experiences.length > 0 && (
+          <div>
+            <div style={secTitleMain}>Experience</div>
+            {d.experiences.map((e: any, i: number) => (
+              <div key={i} style={{ marginBottom: 16, paddingLeft: 14, borderLeft: `3px solid ${primary}` }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div>
+                    <div style={{ fontSize: 11.5, fontWeight: 700, color: '#111' }}>{e.jobTitle}</div>
+                    <div style={{ fontSize: 10.5, color: primary, fontWeight: 600 }}>{e.company}</div>
+                  </div>
+                  <div style={{ ...tiny, whiteSpace: 'nowrap', flexShrink: 0, paddingLeft: 8 }}>{fmt(e.startDate)} – {e.currentlyWorking ? 'Present' : fmt(e.endDate)}</div>
+                </div>
+                {e.description && <div style={{ ...tiny, marginTop: 5, lineHeight: 1.6 }}>{e.description}</div>}
+              </div>
+            ))}
+          </div>
+        )}
+        {d.education.length > 0 && (
+          <div>
+            <div style={secTitleMain}>Education</div>
+            {d.education.map((e: any, i: number) => (
+              <div key={i} style={{ marginBottom: 12, paddingLeft: 14, borderLeft: `3px solid ${accent}` }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: '#111' }}>{e.degree}</div>
+                    <div style={{ fontSize: 10, color: primary }}>{e.institution}</div>
+                  </div>
+                  <div style={{ ...tiny, whiteSpace: 'nowrap', flexShrink: 0, paddingLeft: 8 }}>{fmt(e.startDate)} – {e.currentlyStudying ? 'Present' : fmt(e.endDate)}</div>
+                </div>
+                {e.description && <div style={{ ...tiny, marginTop: 4 }}>{e.description}</div>}
+              </div>
+            ))}
+          </div>
+        )}
+        {active.includes('certifications') && d.certifications.length > 0 && (
+          <div>
+            <div style={secTitleMain}>Certifications</div>
+            {d.certifications.map((c: any, i: number) => (
+              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', ...tiny, marginBottom: 5 }}>
+                <span style={{ fontWeight: 600 }}>{c.name}</span>
+                <span>{c.issuer} · {fmt(c.date)}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        {active.includes('projects') && d.projects.length > 0 && (
+          <div>
+            <div style={secTitleMain}>Projects</div>
+            {d.projects.map((p: any, i: number) => (
+              <div key={i} style={{ marginBottom: 10 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#111' }}>{p.name}</div>
+                {p.link && <div style={{ ...tiny, color: primary }}>{p.link}</div>}
+                {p.description && <div style={{ ...tiny, marginTop: 3, lineHeight: 1.5 }}>{p.description}</div>}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function TemplateTwoColumn({ d, active, primary, accent }: any) {
+  const tiny: React.CSSProperties = { fontSize: 10, color: '#555', fontFamily: FONT };
+  const secTitle: React.CSSProperties = { fontSize: 10, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: primary, paddingBottom: 5, marginBottom: 12, borderBottom: `2px solid ${primary}` };
+  const pill: React.CSSProperties = { display: 'inline-block', background: accent, color: primary, fontSize: 9.5, padding: '2px 8px', borderRadius: 12, marginRight: 4, marginBottom: 4 };
+
+  return (
+    <div style={{ fontFamily: FONT, backgroundColor: '#fff', minHeight: 1054, color: '#1a1a1a' }}>
+      <div style={{ backgroundColor: primary, padding: '36px 48px', textAlign: 'center' }}>
+        {d.photo && (
+          <div style={{ marginBottom: 12 }}>
+            <img src={d.photo} alt="" style={{ width: 82, height: 82, borderRadius: '50%', objectFit: 'cover', border: '3px solid rgba(255,255,255,0.4)', display: 'inline-block' }} />
+          </div>
+        )}
+        <div style={{ fontSize: 26, fontWeight: 900, color: '#fff' }}>{d.fullName || 'Your Name'}</div>
+        {d.jobTitle && <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.75)', marginTop: 5, letterSpacing: 1 }}>{d.jobTitle}</div>}
+        <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '5px 18px', marginTop: 12, fontSize: 9.5, color: 'rgba(255,255,255,0.8)' }}>
+          {d.email && <span>✉ {d.email}</span>}
+          {d.phone && <span>✆ {d.phone}</span>}
+          {d.location && <span>⊙ {d.location}</span>}
+          {d.website && <span>⊕ {d.website}</span>}
+        </div>
+      </div>
+
+      {d.summary && (
+        <div style={{ padding: '22px 48px 0', borderBottom: `1px solid ${accent}` }}>
+          <div style={{ fontSize: 10.5, color: '#333', lineHeight: 1.7, paddingBottom: 16 }}>{d.summary}</div>
+        </div>
+      )}
+
+      <div style={{ display: 'flex', padding: '24px 48px', gap: 36 }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 22 }}>
+          {d.experiences.length > 0 && (
+            <div>
+              <div style={secTitle}>Work Experience</div>
+              {d.experiences.map((e: any, i: number) => (
+                <div key={i} style={{ marginBottom: 16 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <div style={{ fontSize: 11.5, fontWeight: 700, color: '#111' }}>{e.jobTitle}</div>
+                      <div style={{ fontSize: 10.5, color: primary, fontWeight: 600 }}>{e.company}</div>
+                    </div>
+                    <div style={{ ...tiny, whiteSpace: 'nowrap', flexShrink: 0, paddingLeft: 8 }}>{fmt(e.startDate)} – {e.currentlyWorking ? 'Present' : fmt(e.endDate)}</div>
+                  </div>
+                  {e.description && <div style={{ ...tiny, marginTop: 5, lineHeight: 1.6 }}>{e.description}</div>}
+                </div>
+              ))}
+            </div>
+          )}
+          {d.education.length > 0 && (
+            <div>
+              <div style={secTitle}>Education</div>
+              {d.education.map((e: any, i: number) => (
+                <div key={i} style={{ marginBottom: 12 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <div style={{ fontSize: 11.5, fontWeight: 700, color: '#111' }}>{e.degree}</div>
+                      <div style={{ fontSize: 10.5, color: primary }}>{e.institution}</div>
+                    </div>
+                    <div style={{ ...tiny, whiteSpace: 'nowrap', flexShrink: 0, paddingLeft: 8 }}>{fmt(e.startDate)} – {e.currentlyStudying ? 'Present' : fmt(e.endDate)}</div>
+                  </div>
+                  {e.description && <div style={{ ...tiny, marginTop: 4 }}>{e.description}</div>}
+                </div>
+              ))}
+            </div>
+          )}
+          {active.includes('projects') && d.projects.length > 0 && (
+            <div>
+              <div style={secTitle}>Projects</div>
+              {d.projects.map((p: any, i: number) => (
+                <div key={i} style={{ marginBottom: 10 }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: '#111' }}>{p.name}</div>
+                  {p.link && <div style={{ ...tiny, color: primary }}>{p.link}</div>}
+                  {p.description && <div style={{ ...tiny, marginTop: 3, lineHeight: 1.5 }}>{p.description}</div>}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div style={{ width: 200, flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 22 }}>
+          {d.skills.length > 0 && (
+            <div>
+              <div style={secTitle}>Skills</div>
+              <div>{d.skills.map((s: string, i: number) => <span key={i} style={pill}>{s}</span>)}</div>
+            </div>
+          )}
+          {active.includes('languages') && d.languages.length > 0 && (
+            <div>
+              <div style={secTitle}>Languages</div>
+              {d.languages.map((l: any, i: number) => (
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: '#333', marginBottom: 5 }}>
+                  <span style={{ fontWeight: 600 }}>{l.name}</span>
+                  <span style={{ textTransform: 'capitalize', color: '#888' }}>{l.proficiency}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          {active.includes('certifications') && d.certifications.length > 0 && (
+            <div>
+              <div style={secTitle}>Certifications</div>
+              {d.certifications.map((c: any, i: number) => (
+                <div key={i} style={{ fontSize: 9.5, color: '#333', marginBottom: 6 }}>
+                  <div style={{ fontWeight: 700 }}>{c.name}</div>
+                  <div style={{ color: '#666' }}>{c.issuer} · {fmt(c.date)}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          {active.includes('achievements') && d.achievements.length > 0 && (
+            <div>
+              <div style={secTitle}>Achievements</div>
+              {d.achievements.map((a: string, i: number) => (
+                <div key={i} style={{ ...tiny, paddingLeft: 8, borderLeft: `3px solid ${accent}`, marginBottom: 5, lineHeight: 1.5 }}>— {a}</div>
+              ))}
+            </div>
+          )}
+          {active.includes('interests') && d.interests.length > 0 && (
+            <div>
+              <div style={secTitle}>Interests</div>
+              <div style={{ fontSize: 9.5, color: '#555', lineHeight: 1.9 }}>{d.interests.join(' · ')}</div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TemplatePhotoCard({ d, active, primary, accent }: any) {
+  const tiny: React.CSSProperties = { fontSize: 10, color: '#555', fontFamily: FONT };
+  const secTitle: React.CSSProperties = { fontSize: 10, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: primary, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 };
+  const pill: React.CSSProperties = { display: 'inline-block', background: accent, color: primary, fontSize: 9.5, padding: '2px 8px', borderRadius: 12, marginRight: 4, marginBottom: 4 };
+
+  return (
+    <div style={{ fontFamily: FONT, backgroundColor: '#fff', minHeight: 1054, color: '#1a1a1a' }}>
+      <div style={{ display: 'flex', alignItems: 'stretch', minHeight: 200 }}>
+        {d.photo ? (
+          <div style={{ width: 180, flexShrink: 0, position: 'relative', overflow: 'hidden' }}>
+            <img src={d.photo} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to right, transparent 60%, rgba(255,255,255,0.4))` }} />
+          </div>
+        ) : null}
+        <div style={{ flex: 1, backgroundColor: primary, padding: '36px 40px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <div style={{ fontSize: 28, fontWeight: 900, color: '#fff', lineHeight: 1.1 }}>{d.fullName || 'Your Name'}</div>
+          {d.jobTitle && <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', marginTop: 6, fontWeight: 400 }}>{d.jobTitle}</div>}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px 16px', marginTop: 14, fontSize: 9.5, color: 'rgba(255,255,255,0.8)' }}>
+            {d.email && <span>✉ {d.email}</span>}
+            {d.phone && <span>✆ {d.phone}</span>}
+            {d.location && <span>⊙ {d.location}</span>}
+            {d.website && <span>⊕ {d.website}</span>}
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', gap: 0 }}>
+        <div style={{ flex: 1, padding: '32px 40px', display: 'flex', flexDirection: 'column', gap: 22 }}>
+          {d.summary && (
+            <div>
+              <div style={secTitle}><span style={{ display: 'inline-block', width: 24, height: 2, backgroundColor: primary, marginRight: 4 }} />Profile</div>
+              <div style={{ fontSize: 10.5, color: '#333', lineHeight: 1.7 }}>{d.summary}</div>
+            </div>
+          )}
+          {d.experiences.length > 0 && (
+            <div>
+              <div style={secTitle}><span style={{ display: 'inline-block', width: 24, height: 2, backgroundColor: primary, marginRight: 4 }} />Experience</div>
+              {d.experiences.map((e: any, i: number) => (
+                <div key={i} style={{ marginBottom: 16, padding: '10px 14px', borderLeft: `3px solid ${primary}`, backgroundColor: accent }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <div style={{ fontSize: 11.5, fontWeight: 700, color: '#111' }}>{e.jobTitle}</div>
+                      <div style={{ fontSize: 10.5, color: primary, fontWeight: 600 }}>{e.company}</div>
+                    </div>
+                    <div style={{ ...tiny, whiteSpace: 'nowrap', flexShrink: 0, paddingLeft: 8 }}>{fmt(e.startDate)} – {e.currentlyWorking ? 'Present' : fmt(e.endDate)}</div>
+                  </div>
+                  {e.description && <div style={{ ...tiny, marginTop: 5, lineHeight: 1.6 }}>{e.description}</div>}
+                </div>
+              ))}
+            </div>
+          )}
+          {d.education.length > 0 && (
+            <div>
+              <div style={secTitle}><span style={{ display: 'inline-block', width: 24, height: 2, backgroundColor: primary, marginRight: 4 }} />Education</div>
+              {d.education.map((e: any, i: number) => (
+                <div key={i} style={{ marginBottom: 12, padding: '8px 14px', borderLeft: `3px solid ${accent}`, backgroundColor: '#fafafa' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <div>
+                      <div style={{ fontSize: 11.5, fontWeight: 700, color: '#111' }}>{e.degree}</div>
+                      <div style={{ fontSize: 10.5, color: primary }}>{e.institution}</div>
+                    </div>
+                    <div style={{ ...tiny, whiteSpace: 'nowrap', flexShrink: 0, paddingLeft: 8 }}>{fmt(e.startDate)} – {e.currentlyStudying ? 'Present' : fmt(e.endDate)}</div>
+                  </div>
+                  {e.description && <div style={{ ...tiny, marginTop: 4 }}>{e.description}</div>}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div style={{ width: 200, flexShrink: 0, backgroundColor: '#fafafa', borderLeft: `3px solid ${accent}`, padding: '32px 20px', display: 'flex', flexDirection: 'column', gap: 18 }}>
+          {d.skills.length > 0 && (
+            <div>
+              <div style={{ ...secTitle, fontSize: 9 }}>Skills</div>
+              <div>{d.skills.map((s: string, i: number) => <span key={i} style={pill}>{s}</span>)}</div>
+            </div>
+          )}
+          {active.includes('certifications') && d.certifications.length > 0 && (
+            <div>
+              <div style={{ ...secTitle, fontSize: 9 }}>Certifications</div>
+              {d.certifications.map((c: any, i: number) => (
+                <div key={i} style={{ fontSize: 9.5, color: '#333', marginBottom: 6 }}>
+                  <div style={{ fontWeight: 700 }}>{c.name}</div>
+                  <div style={{ color: '#666' }}>{c.issuer}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          {active.includes('languages') && d.languages.length > 0 && (
+            <div>
+              <div style={{ ...secTitle, fontSize: 9 }}>Languages</div>
+              {d.languages.map((l: any, i: number) => (
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: '#333', marginBottom: 5 }}>
+                  <span style={{ fontWeight: 600 }}>{l.name}</span>
+                  <span style={{ textTransform: 'capitalize', color: '#888' }}>{l.proficiency}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          {active.includes('projects') && d.projects.length > 0 && (
+            <div>
+              <div style={{ ...secTitle, fontSize: 9 }}>Projects</div>
+              {d.projects.map((p: any, i: number) => (
+                <div key={i} style={{ marginBottom: 8 }}>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: '#111' }}>{p.name}</div>
+                  {p.link && <div style={{ fontSize: 9, color: primary }}>{p.link}</div>}
+                </div>
+              ))}
+            </div>
+          )}
+          {active.includes('interests') && d.interests.length > 0 && (
+            <div>
+              <div style={{ ...secTitle, fontSize: 9 }}>Interests</div>
+              <div style={{ fontSize: 9.5, color: '#555', lineHeight: 1.9 }}>{d.interests.join(' · ')}</div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Shared additional sections renderer (inline-safe) ──────── */
 function AdditionalSectionsInline({ d, active, secTitle, tiny, primary, accent, pill }: any) {
   return (
@@ -864,6 +1379,18 @@ const TEMPLATES: Record<string, TConfig> = {
   indigo:         { primary: '#4338CA', accent: '#E0E7FF', renderer: 'tech' },
   'ats-friendly': { primary: '#1F2937', accent: '#F9FAFB', renderer: 'minimal' },
   compact:        { primary: '#334155', accent: '#F1F5F9', renderer: 'classic' },
+  crimson:        { primary: '#9B1C1C', accent: '#FEF2F2', renderer: 'timeline' },
+  ocean:          { primary: '#0369A1', accent: '#E0F2FE', renderer: 'timeline' },
+  violet:         { primary: '#6D28D9', accent: '#EDE9FE', renderer: 'timeline' },
+  graphite:       { primary: '#374151', accent: '#F3F4F6', renderer: 'infographic' },
+  emerald:        { primary: '#065F46', accent: '#D1FAE5', renderer: 'infographic' },
+  cobalt:         { primary: '#1D4ED8', accent: '#DBEAFE', renderer: 'infographic' },
+  sunset:         { primary: '#C2410C', accent: '#FFF7ED', renderer: 'two-column' },
+  lavender:       { primary: '#5B21B6', accent: '#EDE9FE', renderer: 'two-column' },
+  sage:           { primary: '#3F6212', accent: '#ECFCCB', renderer: 'two-column' },
+  portrait:       { primary: '#1D4ED8', accent: '#EFF6FF', renderer: 'photo-card' },
+  charcoal:       { primary: '#111827', accent: '#F3F4F6', renderer: 'photo-card' },
+  berry:          { primary: '#831843', accent: '#FCE7F3', renderer: 'photo-card' },
 };
 
 function renderTemplate(renderer: string, props: any) {
@@ -874,6 +1401,10 @@ function renderTemplate(renderer: string, props: any) {
     case 'minimal':       return <TemplateMinimal {...props} />;
     case 'elegant':       return <TemplateElegant {...props} />;
     case 'tech':          return <TemplateTech {...props} />;
+    case 'timeline':      return <TemplateTimeline {...props} />;
+    case 'infographic':   return <TemplateInfographic {...props} />;
+    case 'two-column':    return <TemplateTwoColumn {...props} />;
+    case 'photo-card':    return <TemplatePhotoCard {...props} />;
     default:              return <TemplateClassic {...props} />;
   }
 }

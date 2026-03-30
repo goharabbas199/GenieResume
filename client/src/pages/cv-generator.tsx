@@ -51,6 +51,7 @@ function CVGeneratorContent() {
       const element = document.getElementById('cv-preview-content');
       if (!element) throw new Error('Preview element not found');
 
+      const rect = element.getBoundingClientRect();
       const opt = {
         margin: 0,
         filename: `${cvData.fullName?.replace(/\s+/g, '_') || 'resume'}_CV.pdf`,
@@ -63,8 +64,15 @@ function CVGeneratorContent() {
           backgroundColor: '#ffffff',
           windowWidth: 794,
           width: 794,
+          x: rect.left + window.scrollX,
+          y: rect.top + window.scrollY,
+          scrollX: 0,
+          scrollY: 0,
+          logging: false,
+          imageTimeout: 0,
         },
         jsPDF: { unit: 'mm' as const, format: 'a4' as const, orientation: 'portrait' as const },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
       };
 
       await html2pdf().set(opt).from(element).save();
