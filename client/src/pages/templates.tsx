@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 import { useCV } from '@/context/CVContext';
 import { templates, categories, type Template } from '@/lib/templates';
 import TemplateThumbnail from '@/components/TemplateThumbnail';
-import TemplateLargePreview from '@/components/TemplateLargePreview';
+import { ScaledTemplatePreview } from '@/components/TemplateLargePreview';
 
 export default function TemplatesPage() {
   const [, navigate] = useLocation();
@@ -243,26 +243,23 @@ function TemplateModal({
         </button>
 
         {/* Left: Document preview */}
-        <div className="flex-1 overflow-auto bg-muted/30 flex items-center justify-center p-6 lg:p-10 min-h-[50vh] lg:min-h-0">
-          <div className="w-full max-w-lg">
+        <div className="flex-1 overflow-auto bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex flex-col items-center justify-start p-6 lg:p-8 min-h-[50vh] lg:min-h-0">
+          <div className="w-full max-w-[520px]">
             {/* Paper with shadow */}
             <div className="relative">
-              <div className="absolute inset-0 translate-y-3 translate-x-2 bg-black/20 rounded-xl blur-md" />
-              <div
-                className="relative bg-white rounded-xl overflow-hidden border border-gray-200 shadow-2xl"
-                style={{ aspectRatio: '210/297' }}
-              >
-                <TemplateLargePreview t={t} />
+              <div className="absolute inset-0 translate-y-4 translate-x-3 bg-black/25 rounded-2xl blur-xl" />
+              <div className="relative bg-white rounded-2xl overflow-hidden border border-gray-200/80 shadow-2xl">
+                <ScaledTemplatePreview t={t} />
               </div>
             </div>
 
             {/* Prev / Next navigation */}
-            <div className="flex items-center justify-center gap-3 mt-5">
-              <Button variant="outline" size="sm" className="gap-1.5 h-8 text-xs" onClick={onPrev}>
+            <div className="flex items-center justify-center gap-3 mt-6">
+              <Button variant="outline" size="sm" className="gap-1.5 h-9 text-xs bg-white/80 hover:bg-white" onClick={onPrev}>
                 <ArrowLeft className="h-3.5 w-3.5" /> Previous
               </Button>
-              <span className="text-xs text-muted-foreground">Browse templates</span>
-              <Button variant="outline" size="sm" className="gap-1.5 h-8 text-xs" onClick={onNext}>
+              <span className="text-xs text-muted-foreground font-medium px-2">Browse templates</span>
+              <Button variant="outline" size="sm" className="gap-1.5 h-9 text-xs bg-white/80 hover:bg-white" onClick={onNext}>
                 Next <ChevronRight className="h-3.5 w-3.5" />
               </Button>
             </div>
