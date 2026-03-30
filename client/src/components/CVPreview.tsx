@@ -1436,7 +1436,12 @@ export default function CVPreview({ className, zoom = 0.82 }: CVPreviewProps) {
   const { cvData, selectedTemplate, activeSections } = useCV();
   const cfg = TEMPLATES[selectedTemplate] ?? TEMPLATES.modern;
   const { data: displayData, sections: displaySections } = getDisplayData(cvData);
-  const props = { d: displayData, active: displaySections, primary: cfg.primary, accent: cfg.accent };
+
+  // When user has no data, show sample with all sections; otherwise respect the user's toggled sections
+  const isDataEmpty = !cvData.fullName && !cvData.email && cvData.experiences.length === 0;
+  const activeForPreview = isDataEmpty ? displaySections : activeSections;
+
+  const props = { d: displayData, active: activeForPreview, primary: cfg.primary, accent: cfg.accent };
 
   const A4_W = 794;
   const A4_H = 1122;

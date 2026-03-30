@@ -107,7 +107,7 @@ export default function WelcomePage() {
 
         {/* Stats row */}
         <div className="relative flex items-center gap-6 mt-10">
-          {STATS.map(({ value, label }, i) => (
+          {STATS.map(({ value, label }) => (
             <div key={label} className="flex flex-col items-center">
               <span className="text-2xl font-extrabold text-foreground">{value}</span>
               <span className="text-xs text-muted-foreground">{label}</span>
@@ -149,7 +149,7 @@ export default function WelcomePage() {
             style={{ width: 104, height: 146 }}
             data-testid="button-more-templates"
           >
-            <span className="text-2xl font-bold">+34</span>
+            <span className="text-2xl font-bold">+{templates.length - PREVIEW_IDS.length}</span>
             <span className="text-[10px] font-medium">more</span>
           </button>
         </div>

@@ -1,5 +1,5 @@
 import type { Express } from "express";
-import { createServer, type Server } from "http";
+import { type Server } from "http";
 import { z } from "zod";
 import { improveText, type ToneType } from "./openai";
 

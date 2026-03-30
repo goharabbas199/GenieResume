@@ -1,4 +1,5 @@
-import { FileText, Plus, Award, Briefcase, Globe, Heart, Info, ChevronDown, Moon, Sun, Trash2, FlaskConical, Sparkles, Download } from 'lucide-react';
+import { useState } from 'react';
+import { FileText, Plus, Award, Briefcase, Globe, Heart, Info, ChevronDown, Moon, Sun, Trash2, FlaskConical, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import {
@@ -17,7 +18,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useCV } from '@/context/CVContext';
@@ -40,6 +40,7 @@ interface HeaderProps {
 export default function Header({ onExportPDF }: HeaderProps) {
   const { activeSections, toggleSection, completionScore, resetCV, loadSampleData } = useCV();
   const { theme, toggleTheme } = useTheme();
+  const [showResetDialog, setShowResetDialog] = useState(false);
 
   const scoreColor =
     completionScore < 40 ? 'text-destructive' :
@@ -131,32 +132,33 @@ export default function Header({ onExportPDF }: HeaderProps) {
                 );
               })}
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <button className="flex w-full items-center gap-2 px-2 py-1.5 text-sm text-destructive hover:bg-destructive/10 rounded-sm cursor-pointer" data-testid="button-reset-cv">
-                      <Trash2 className="h-4 w-4" />
-                      Reset CV
-                    </button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Reset your CV?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This will clear all your data and start fresh. This action cannot be undone.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction onClick={resetCV} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                        Reset
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+              <DropdownMenuItem
+                onClick={() => setShowResetDialog(true)}
+                className="gap-2 cursor-pointer text-destructive focus:text-destructive focus:bg-destructive/10"
+                data-testid="button-reset-cv"
+              >
+                <Trash2 className="h-4 w-4" />
+                Reset CV
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+
+          <AlertDialog open={showResetDialog} onOpenChange={setShowResetDialog}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Reset your CV?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will clear all your data and start fresh. This action cannot be undone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={resetCV} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                  Reset
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
 
           <Tooltip>
             <TooltipTrigger asChild>

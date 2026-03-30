@@ -1,10 +1,9 @@
 import { useCallback, useState, useRef } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { Camera, X, ZoomIn, ZoomOut, RotateCcw, Check } from 'lucide-react';
+import { Camera, X, RotateCcw, Check } from 'lucide-react';
 import ReactCrop, { Crop, PixelCrop, centerCrop, makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { Button } from '@/components/ui/button';
-import { Slider } from '@/components/ui/slider';
 import {
   Dialog,
   DialogContent,
@@ -40,7 +39,6 @@ export default function PhotoUpload() {
   const [originalImage, setOriginalImage] = useState<string | null>(null);
   const [crop, setCrop] = useState<Crop>();
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
-  const [zoom, setZoom] = useState(1);
   const imgRef = useRef<HTMLImageElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -51,7 +49,6 @@ export default function PhotoUpload() {
       reader.onload = () => {
         setOriginalImage(reader.result as string);
         setShowCropDialog(true);
-        setZoom(1);
       };
       reader.readAsDataURL(file);
     }
@@ -118,7 +115,6 @@ export default function PhotoUpload() {
     if (cvData.photo) {
       setOriginalImage(cvData.photo);
       setShowCropDialog(true);
-      setZoom(1);
     }
   };
 
@@ -126,7 +122,6 @@ export default function PhotoUpload() {
     if (imgRef.current) {
       const { width, height } = imgRef.current;
       setCrop(centerAspectCrop(width, height, 1));
-      setZoom(1);
     }
   };
 
@@ -186,7 +181,7 @@ export default function PhotoUpload() {
           </DialogHeader>
           
           <div className="space-y-4">
-            <div className="flex justify-center bg-muted/50 rounded-lg p-4 max-h-[400px] overflow-hidden">
+            <div className="flex justify-center bg-muted/50 rounded-lg p-4 max-h-[400px] overflow-auto">
               {originalImage && (
                 <ReactCrop
                   crop={crop}
@@ -201,37 +196,16 @@ export default function PhotoUpload() {
                     src={originalImage}
                     alt="Crop preview"
                     onLoad={onImageLoad}
-                    style={{ 
-                      maxHeight: '350px',
-                      transform: `scale(${zoom})`,
-                      transformOrigin: 'center',
-                      transition: 'transform 0.1s ease-out'
-                    }}
+                    style={{ maxHeight: '350px', display: 'block' }}
                     className="rounded-lg"
                   />
                 </ReactCrop>
               )}
             </div>
 
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <ZoomOut className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                <Slider
-                  value={[zoom]}
-                  onValueChange={(value) => setZoom(value[0])}
-                  min={0.5}
-                  max={2}
-                  step={0.1}
-                  className="flex-1"
-                  data-testid="slider-zoom"
-                />
-                <ZoomIn className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-              </div>
-              
-              <p className="text-xs text-muted-foreground text-center">
-                Drag the selection to adjust which part of your photo appears in your CV
-              </p>
-            </div>
+            <p className="text-xs text-muted-foreground text-center">
+              Drag the circle to reposition · Drag the edges to resize
+            </p>
 
             <div className="flex justify-between gap-2">
               <Button
