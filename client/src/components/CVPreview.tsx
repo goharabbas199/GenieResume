@@ -1,6 +1,7 @@
 import { useCV } from '@/context/CVContext';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
+import { getDisplayData } from '@/lib/sampleData';
 
 /* ─── helpers ─────────────────────────────────────────────────── */
 const fmt = (d: string) => {
@@ -1423,7 +1424,8 @@ function renderTemplate(renderer: string, props: any) {
 export default function CVPreview({ className, zoom = 0.82 }: CVPreviewProps) {
   const { cvData, selectedTemplate, activeSections } = useCV();
   const cfg = TEMPLATES[selectedTemplate] ?? TEMPLATES.modern;
-  const props = { d: cvData, active: activeSections, primary: cfg.primary, accent: cfg.accent };
+  const { data: displayData, sections: displaySections } = getDisplayData(cvData);
+  const props = { d: displayData, active: displaySections, primary: cfg.primary, accent: cfg.accent };
 
   const A4_W = 794;
   const A4_H = 1122;

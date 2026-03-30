@@ -9,18 +9,18 @@ const CV_WIDTH = 595;
 const CV_HEIGHT = 842;
 
 const PLACEHOLDER = {
-  name: 'Alex Johnson',
+  name: 'Ahmed Khan',
   title: 'Senior Software Engineer',
-  email: 'alex.johnson@email.com',
-  phone: '+1 (555) 012-3456',
+  email: 'ahmed.khan@email.com',
+  phone: '+1 (555) 234-5678',
   location: 'San Francisco, CA',
-  website: 'linkedin.com/in/alexjohnson',
-  summary: 'Results-driven engineer with 8+ years of experience building scalable systems and leading cross-functional teams. Passionate about clean code and user-centric design.',
-  exp1: { role: 'Senior Engineer', company: 'TechCorp Inc.', date: '2020 – Present', bullets: ['Led migration to microservices, reducing latency by 40%', 'Mentored team of 6 junior developers', 'Shipped 3 major product features on schedule'] },
-  exp2: { role: 'Software Engineer', company: 'StartupXYZ', date: '2017 – 2020', bullets: ['Built REST APIs serving 2M+ daily requests', 'Improved CI/CD pipeline, cutting deploy time by 60%'] },
-  edu: { degree: 'B.Sc. Computer Science', school: 'University of California', date: '2013 – 2017' },
-  skills: ['TypeScript', 'React', 'Node.js', 'PostgreSQL', 'Docker', 'AWS', 'GraphQL'],
-  langs: ['English (Native)', 'Spanish (B2)'],
+  website: 'linkedin.com/in/ahmedkhan',
+  summary: 'Results-driven Senior Software Engineer with 8+ years of experience designing scalable, high-performance systems. Proven leader in cross-functional teams, passionate about clean architecture and building products that reach millions of users.',
+  exp1: { role: 'Senior Software Engineer', company: 'TechCorp Inc.', date: '2020 – Present', bullets: ['Led migration to microservices, reducing latency by 40%', 'Architected a real-time data pipeline processing 5M+ events/day', 'Mentored a team of 6 engineers across two time zones'] },
+  exp2: { role: 'Software Engineer', company: 'StartupXYZ', date: '2017 – 2020', bullets: ['Built REST APIs serving 2M+ daily active users', 'Improved CI/CD pipeline, cutting deploy time by 60%'] },
+  edu: { degree: 'B.Sc. Computer Science', school: 'University of California, Berkeley', date: '2011 – 2015' },
+  skills: ['TypeScript', 'React', 'Node.js', 'PostgreSQL', 'Docker', 'AWS', 'GraphQL', 'Kubernetes'],
+  langs: ['English (Native)', 'Arabic (Native)', 'French (Intermediate)'],
 };
 
 function SectionTitle({ label, color }: { label: string; color: string }) {
