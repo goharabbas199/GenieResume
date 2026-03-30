@@ -49,6 +49,7 @@ export interface CVData {
   phone: string;
   location: string;
   website: string;
+  linkedin: string;
   summary: string;
   experiences: Experience[];
   education: Education[];
@@ -85,6 +86,7 @@ const defaultCVData: CVData = {
   phone: '',
   location: '',
   website: '',
+  linkedin: '',
   summary: '',
   experiences: [],
   education: [],

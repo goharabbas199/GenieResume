@@ -51,6 +51,7 @@ function TemplateClassic({ d, active, primary, accent }: any) {
           {d.phone && <span>✆ {d.phone}</span>}
           {d.location && <span>⊙ {d.location}</span>}
           {d.website && <span>⊕ {d.website}</span>}
+          {d.linkedin && <span>in {d.linkedin}</span>}
         </div>
       </div>
 
@@ -149,6 +150,7 @@ function TemplateSidebarLeft({ d, active, primary, accent }: any) {
             {d.phone && <div style={sideTiny}>✆ {d.phone}</div>}
             {d.location && <div style={sideTiny}>⊙ {d.location}</div>}
             {d.website && <div style={{ ...sideTiny, wordBreak: 'break-all' }}>⊕ {d.website}</div>}
+            {d.linkedin && <div style={{ ...sideTiny, wordBreak: 'break-all' }}>in {d.linkedin}</div>}
           </div>
         </div>
 
@@ -317,6 +319,7 @@ function TemplateSidebarRight({ d, active, primary, accent }: any) {
             {d.phone && <div style={sideTiny}>✆ {d.phone}</div>}
             {d.location && <div style={sideTiny}>⊙ {d.location}</div>}
             {d.website && <div style={{ ...sideTiny, wordBreak: 'break-all' }}>⊕ {d.website}</div>}
+            {d.linkedin && <div style={{ ...sideTiny, wordBreak: 'break-all' }}>in {d.linkedin}</div>}
           </div>
         </div>
         {d.skills.length > 0 && (
@@ -378,6 +381,7 @@ function TemplateModernBand({ d, active, primary, accent }: any) {
             {d.phone && <span>✆ {d.phone}</span>}
             {d.location && <span>⊙ {d.location}</span>}
             {d.website && <span>⊕ {d.website}</span>}
+            {d.linkedin && <span>in {d.linkedin}</span>}
           </div>
         </div>
       </div>
@@ -487,6 +491,7 @@ function TemplateMinimal({ d, active, primary }: any) {
           {d.phone && <span>{d.phone}</span>}
           {d.location && <span>{d.location}</span>}
           {d.website && <span>{d.website}</span>}
+          {d.linkedin && <span>{d.linkedin}</span>}
         </div>
       </div>
 
@@ -576,6 +581,7 @@ function TemplateElegant({ d, active, primary, accent }: any) {
               {d.phone && <span>✆ {d.phone}</span>}
               {d.location && <span>⊙ {d.location}</span>}
               {d.website && <span>⊕ {d.website}</span>}
+              {d.linkedin && <span>in {d.linkedin}</span>}
             </div>
           </div>
         </div>
@@ -683,6 +689,7 @@ function TemplateTech({ d, active, primary, accent }: any) {
             {d.phone && <span>{d.phone}</span>}
             {d.location && <span>{d.location}</span>}
             {d.website && <span>{d.website}</span>}
+            {d.linkedin && <span>{d.linkedin}</span>}
           </div>
         </div>
       </div>
@@ -797,6 +804,7 @@ function TemplateTimeline({ d, active, primary, accent }: any) {
             {d.phone && <span>✆ {d.phone}</span>}
             {d.location && <span>⊙ {d.location}</span>}
             {d.website && <span>⊕ {d.website}</span>}
+            {d.linkedin && <span>in {d.linkedin}</span>}
           </div>
         </div>
       </div>
@@ -943,6 +951,7 @@ function TemplateInfographic({ d, active, primary, accent }: any) {
             {d.phone && <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.85)' }}>✆ {d.phone}</div>}
             {d.location && <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.85)' }}>⊙ {d.location}</div>}
             {d.website && <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.85)', wordBreak: 'break-all' }}>⊕ {d.website}</div>}
+            {d.linkedin && <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.85)', wordBreak: 'break-all' }}>in {d.linkedin}</div>}
           </div>
         </div>
         {d.skills.length > 0 && (
@@ -1061,6 +1070,7 @@ function TemplateTwoColumn({ d, active, primary, accent }: any) {
           {d.phone && <span>✆ {d.phone}</span>}
           {d.location && <span>⊙ {d.location}</span>}
           {d.website && <span>⊕ {d.website}</span>}
+          {d.linkedin && <span>in {d.linkedin}</span>}
         </div>
       </div>
 
@@ -1191,6 +1201,7 @@ function TemplatePhotoCard({ d, active, primary, accent }: any) {
             {d.phone && <span>✆ {d.phone}</span>}
             {d.location && <span>⊙ {d.location}</span>}
             {d.website && <span>⊕ {d.website}</span>}
+            {d.linkedin && <span>in {d.linkedin}</span>}
           </div>
         </div>
       </div>

@@ -104,6 +104,20 @@ export default function PersonalDetails() {
               data-testid="input-website"
             />
           </div>
+
+          <div className="space-y-1.5 sm:col-span-2">
+            <Label htmlFor="linkedin" className="flex items-center gap-1.5">
+              <Linkedin className="h-3.5 w-3.5 text-muted-foreground" />
+              LinkedIn
+            </Label>
+            <Input
+              id="linkedin"
+              placeholder="linkedin.com/in/yourname"
+              value={cvData.linkedin}
+              onChange={(e) => updateCVData('linkedin', e.target.value)}
+              data-testid="input-linkedin"
+            />
+          </div>
         </div>
       </CardContent>
     </Card>

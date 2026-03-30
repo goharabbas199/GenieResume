@@ -5,7 +5,8 @@ export const sampleCVData = {
   email: 'ahmed.khan@email.com',
   phone: '+1 (555) 234-5678',
   location: 'San Francisco, CA',
-  website: 'linkedin.com/in/ahmedkhan',
+  website: 'ahmedkhan.dev',
+  linkedin: 'linkedin.com/in/ahmedkhan',
   summary:
     'Results-driven Senior Software Engineer with 8+ years of experience designing and delivering scalable, high-performance systems. Proven leader in cross-functional teams, passionate about clean architecture, developer experience, and building products that reach millions of users. Adept at driving technical strategy from concept to production.',
   experiences: [

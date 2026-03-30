@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { Download, Eye, EyeOff, Loader2, ZoomIn, ZoomOut, CheckCircle2, Save, ChevronRight, ArrowLeft } from 'lucide-react';
+import { Download, Eye, EyeOff, Loader2, ZoomIn, ZoomOut, CheckCircle2, Save, ChevronRight, ArrowLeft, Circle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
@@ -21,12 +21,20 @@ import {
   AdditionalInfoSection,
 } from '@/components/AdditionalSections';
 import CVPreview from '@/components/CVPreview';
+import { cn } from '@/lib/utils';
 
 function SectionProgress({ label, done }: { label: string; done: boolean }) {
   return (
     <div className="flex items-center gap-2">
-      <CheckCircle2 className={`h-3.5 w-3.5 flex-shrink-0 transition-colors ${done ? 'text-emerald-500' : 'text-muted-foreground/30'}`} />
-      <span className={`text-xs transition-colors ${done ? 'text-foreground' : 'text-muted-foreground/60'}`}>{label}</span>
+      <CheckCircle2
+        className={cn(
+          'h-3.5 w-3.5 flex-shrink-0 transition-colors duration-300',
+          done ? 'text-emerald-500' : 'text-muted-foreground/25'
+        )}
+      />
+      <span className={cn('text-xs transition-colors duration-300', done ? 'text-foreground font-medium' : 'text-muted-foreground/60')}>
+        {label}
+      </span>
     </div>
   );
 }
@@ -42,7 +50,7 @@ function CVGeneratorContent() {
 
   useEffect(() => {
     setSavedIndicator(true);
-    const t = setTimeout(() => setSavedIndicator(false), 2000);
+    const t = setTimeout(() => setSavedIndicator(false), 1800);
     return () => clearTimeout(t);
   }, [cvData]);
 
@@ -101,6 +109,9 @@ function CVGeneratorContent() {
   const hasEdu = cvData.education.length > 0;
   const hasSkills = cvData.skills.length >= 3;
 
+  const completedCount = [hasName, hasSummary, hasExp, hasEdu, hasSkills, !!cvData.photo].filter(Boolean).length;
+  const totalCount = 6;
+
   return (
     <div className="min-h-screen bg-muted/30" data-testid="cv-generator-page">
       <Header onExportPDF={handleExportPDF} />
@@ -113,18 +124,19 @@ function CVGeneratorContent() {
             size="sm"
             className="gap-1.5 h-7 text-xs text-muted-foreground hover:text-foreground -ml-2 px-2"
             onClick={() => navigate('/templates')}
+            data-testid="button-change-template"
           >
             <ArrowLeft className="h-3 w-3" />
             Change Template
           </Button>
           <div className="h-4 w-px bg-border" />
           <div className="flex items-center gap-2 text-xs">
-            <div className="flex items-center gap-1.5 text-muted-foreground">
+            <div className="flex items-center gap-1.5">
               <div className="h-4 w-4 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-[9px]">✓</div>
               <span className="hidden sm:inline text-muted-foreground">Welcome</span>
             </div>
             <ChevronRight className="h-3 w-3 text-muted-foreground/40" />
-            <div className="flex items-center gap-1.5 text-muted-foreground">
+            <div className="flex items-center gap-1.5">
               <div className="h-4 w-4 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-[9px]">✓</div>
               <span className="hidden sm:inline text-muted-foreground">Template</span>
             </div>
@@ -147,10 +159,13 @@ function CVGeneratorContent() {
           {/* ── Editor column ─────────────────────────────── */}
           <div className="w-full lg:w-[44%] space-y-4 pb-28">
 
-            {/* Quick checklist */}
-            <div className="rounded-xl border bg-card px-4 py-3">
-              <p className="text-xs font-semibold text-muted-foreground mb-2.5 uppercase tracking-wide">Resume Checklist</p>
-              <div className="grid grid-cols-2 gap-y-1.5 gap-x-4">
+            {/* Checklist card */}
+            <div className="rounded-xl border bg-card px-4 py-3 shadow-sm">
+              <div className="flex items-center justify-between mb-2.5">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Resume Checklist</p>
+                <span className="text-xs font-bold text-muted-foreground tabular-nums">{completedCount}/{totalCount}</span>
+              </div>
+              <div className="grid grid-cols-2 gap-y-2 gap-x-4">
                 <SectionProgress label="Name & Contact" done={hasName} />
                 <SectionProgress label="Professional Summary" done={hasSummary} />
                 <SectionProgress label="Work Experience" done={hasExp} />
@@ -178,34 +193,52 @@ function CVGeneratorContent() {
             <div className="sticky top-[4.5rem] flex flex-col gap-2">
               {/* Toolbar */}
               <div className="flex items-center justify-between px-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-medium text-muted-foreground">Live Preview</span>
-                  {savedIndicator && (
-                    <span className="flex items-center gap-1 text-[10px] text-emerald-500 animate-in fade-in duration-300">
-                      <Save className="h-3 w-3" /> Saved
-                    </span>
-                  )}
+                <div className="flex items-center gap-2.5">
+                  <span className="text-xs font-semibold text-muted-foreground">Live Preview</span>
+                  <span
+                    className={cn(
+                      'flex items-center gap-1 text-[10px] text-emerald-500 transition-all duration-300',
+                      savedIndicator ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-1'
+                    )}
+                  >
+                    <Save className="h-3 w-3" />
+                    Saved
+                  </span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button variant="ghost" size="icon" onClick={zoomOut} disabled={previewZoom <= 0.4} data-testid="button-zoom-out">
-                        <ZoomOut className="h-4 w-4" />
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7"
+                        onClick={zoomOut}
+                        disabled={previewZoom <= 0.4}
+                        data-testid="button-zoom-out"
+                      >
+                        <ZoomOut className="h-3.5 w-3.5" />
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>Zoom out</TooltipContent>
                   </Tooltip>
                   <button
                     onClick={zoomReset}
-                    className="text-xs font-mono text-muted-foreground w-12 text-center hover:text-foreground transition-colors"
+                    className="text-xs font-mono text-muted-foreground w-11 text-center hover:text-foreground transition-colors tabular-nums"
                     data-testid="button-zoom-reset"
                   >
                     {Math.round(previewZoom * 100)}%
                   </button>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button variant="ghost" size="icon" onClick={zoomIn} disabled={previewZoom >= 1.3} data-testid="button-zoom-in">
-                        <ZoomIn className="h-4 w-4" />
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7"
+                        onClick={zoomIn}
+                        disabled={previewZoom >= 1.3}
+                        data-testid="button-zoom-in"
+                      >
+                        <ZoomIn className="h-3.5 w-3.5" />
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>Zoom in</TooltipContent>
@@ -253,11 +286,11 @@ function CVGeneratorContent() {
           <div className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 border-b bg-background">
             <h2 className="text-sm font-semibold">CV Preview</h2>
             <div className="flex items-center gap-2">
-              <Button variant="ghost" size="icon" onClick={zoomOut} disabled={previewZoom <= 0.4}>
+              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={zoomOut} disabled={previewZoom <= 0.4}>
                 <ZoomOut className="h-4 w-4" />
               </Button>
-              <span className="text-xs font-mono text-muted-foreground w-10 text-center">{Math.round(previewZoom * 100)}%</span>
-              <Button variant="ghost" size="icon" onClick={zoomIn} disabled={previewZoom >= 1.3}>
+              <span className="text-xs font-mono text-muted-foreground w-10 text-center tabular-nums">{Math.round(previewZoom * 100)}%</span>
+              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={zoomIn} disabled={previewZoom >= 1.3}>
                 <ZoomIn className="h-4 w-4" />
               </Button>
               <Button variant="outline" size="sm" onClick={() => setShowPreview(false)}>Close</Button>
