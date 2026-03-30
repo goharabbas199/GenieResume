@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import CVGenerator from "@/pages/cv-generator";
 import TemplatesPage from "@/pages/templates";
+import WelcomePage from "@/pages/welcome";
 import NotFound from "@/pages/not-found";
 import { CVProvider } from "@/context/CVContext";
 import { useState, useEffect, createContext, useContext } from "react";
@@ -41,8 +42,9 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={CVGenerator} />
+      <Route path="/" component={WelcomePage} />
       <Route path="/templates" component={TemplatesPage} />
+      <Route path="/builder" component={CVGenerator} />
       <Route component={NotFound} />
     </Switch>
   );

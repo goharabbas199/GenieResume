@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLocation } from 'wouter';
-import { ArrowLeft, Check, Search, Sparkles, LayoutTemplate, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Check, Search, Sparkles, LayoutTemplate, ChevronRight, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -27,31 +27,45 @@ export default function TemplatesPage() {
 
   const handleSelect = (t: Template) => {
     setSelectedTemplate(t.id);
-    navigate('/');
+    navigate('/builder');
   };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Top nav */}
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex h-14 items-center gap-4 px-4 md:px-6">
+        <div className="flex h-14 items-center gap-3 px-4 md:px-6">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => navigate('/')}
-            className="gap-2 -ml-2"
+            className="gap-1.5 -ml-2 text-muted-foreground hover:text-foreground"
             data-testid="button-back-to-builder"
           >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Builder
+            <Home className="h-3.5 w-3.5" />
+            Home
           </Button>
-          <div className="h-5 w-px bg-border" />
-          <div className="flex items-center gap-2">
-            <LayoutTemplate className="h-4 w-4 text-primary" />
-            <span className="font-semibold text-sm">Resume Templates</span>
-            <Badge variant="secondary" className="text-xs">{templates.length}</Badge>
+          <div className="h-4 w-px bg-border" />
+
+          {/* Step indicator */}
+          <div className="flex items-center gap-2 text-xs">
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <div className="h-5 w-5 rounded-full bg-muted flex items-center justify-center font-bold text-[10px]">1</div>
+              <span className="hidden sm:inline">Welcome</span>
+            </div>
+            <ChevronRight className="h-3 w-3 text-muted-foreground/40" />
+            <div className="flex items-center gap-1.5 text-primary font-semibold">
+              <div className="h-5 w-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-[10px]">2</div>
+              <span className="hidden sm:inline">Choose Template</span>
+            </div>
+            <ChevronRight className="h-3 w-3 text-muted-foreground/40" />
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <div className="h-5 w-5 rounded-full bg-muted flex items-center justify-center font-bold text-[10px]">3</div>
+              <span className="hidden sm:inline">Fill &amp; Export</span>
+            </div>
           </div>
-          <div className="ml-auto relative w-56">
+
+          <div className="ml-auto relative w-52">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
             <Input
               placeholder="Search templates…"

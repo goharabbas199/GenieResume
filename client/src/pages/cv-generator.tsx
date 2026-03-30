@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
-import { Download, Eye, EyeOff, Loader2, ZoomIn, ZoomOut, CheckCircle2, Save } from 'lucide-react';
+import { useLocation } from 'wouter';
+import { Download, Eye, EyeOff, Loader2, ZoomIn, ZoomOut, CheckCircle2, Save, ChevronRight, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useToast } from '@/hooks/use-toast';
@@ -33,6 +34,7 @@ function SectionProgress({ label, done }: { label: string; done: boolean }) {
 function CVGeneratorContent() {
   const { activeSections, cvData } = useCV();
   const { toast } = useToast();
+  const [, navigate] = useLocation();
   const [isExporting, setIsExporting] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [previewZoom, setPreviewZoom] = useState(0.82);
@@ -102,6 +104,38 @@ function CVGeneratorContent() {
   return (
     <div className="min-h-screen bg-muted/30" data-testid="cv-generator-page">
       <Header onExportPDF={handleExportPDF} />
+
+      {/* Step indicator sub-bar */}
+      <div className="border-b bg-background/80 backdrop-blur">
+        <div className="container flex items-center gap-3 px-4 md:px-6 h-9">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="gap-1.5 h-7 text-xs text-muted-foreground hover:text-foreground -ml-2 px-2"
+            onClick={() => navigate('/templates')}
+          >
+            <ArrowLeft className="h-3 w-3" />
+            Change Template
+          </Button>
+          <div className="h-4 w-px bg-border" />
+          <div className="flex items-center gap-2 text-xs">
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <div className="h-4 w-4 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-[9px]">✓</div>
+              <span className="hidden sm:inline text-muted-foreground">Welcome</span>
+            </div>
+            <ChevronRight className="h-3 w-3 text-muted-foreground/40" />
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <div className="h-4 w-4 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-[9px]">✓</div>
+              <span className="hidden sm:inline text-muted-foreground">Template</span>
+            </div>
+            <ChevronRight className="h-3 w-3 text-muted-foreground/40" />
+            <div className="flex items-center gap-1.5 text-primary font-semibold">
+              <div className="h-4 w-4 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-[9px]">3</div>
+              <span className="hidden sm:inline">Fill &amp; Export</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div className="container px-4 py-5 md:px-6">
         {/* Template gallery */}
