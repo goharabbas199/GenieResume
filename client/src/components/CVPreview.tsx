@@ -1391,6 +1391,14 @@ const TEMPLATES: Record<string, TConfig> = {
   portrait:       { primary: '#1D4ED8', accent: '#EFF6FF', renderer: 'photo-card' },
   charcoal:       { primary: '#111827', accent: '#F3F4F6', renderer: 'photo-card' },
   berry:          { primary: '#831843', accent: '#FCE7F3', renderer: 'photo-card' },
+  dusk:           { primary: '#713f12', accent: '#fef9c3', renderer: 'elegant' },
+  copper:         { primary: '#7c2d12', accent: '#ffedd5', renderer: 'classic' },
+  arctic:         { primary: '#0c4a6e', accent: '#e0f2fe', renderer: 'minimal' },
+  plum:           { primary: '#581c87', accent: '#f5f3ff', renderer: 'sidebar-left' },
+  steel:          { primary: '#1e3a5f', accent: '#dbeafe', renderer: 'tech' },
+  coral:          { primary: '#be185d', accent: '#fce7f3', renderer: 'band' },
+  pine:           { primary: '#14532d', accent: '#dcfce7', renderer: 'timeline' },
+  brick:          { primary: '#991b1b', accent: '#fee2e2', renderer: 'infographic' },
 };
 
 function renderTemplate(renderer: string, props: any) {

@@ -239,9 +239,5 @@ function CVGeneratorContent() {
 }
 
 export default function CVGenerator() {
-  return (
-    <CVProvider>
-      <CVGeneratorContent />
-    </CVProvider>
-  );
+  return <CVGeneratorContent />;
 }

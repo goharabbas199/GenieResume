@@ -4,7 +4,9 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import CVGenerator from "@/pages/cv-generator";
+import TemplatesPage from "@/pages/templates";
 import NotFound from "@/pages/not-found";
+import { CVProvider } from "@/context/CVContext";
 import { useState, useEffect, createContext, useContext } from "react";
 
 interface ThemeContextType {
@@ -40,6 +42,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={CVGenerator} />
+      <Route path="/templates" component={TemplatesPage} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -51,7 +54,9 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
-          <Router />
+          <CVProvider>
+            <Router />
+          </CVProvider>
         </TooltipProvider>
       </QueryClientProvider>
     </ThemeProvider>
